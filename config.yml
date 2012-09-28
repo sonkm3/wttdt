@@ -1,0 +1,26 @@
+reader:
+  module: lib.reader.twitterreader
+  class: TwitterReader
+
+  parameters:
+    oauth:
+      consumer_token: 
+      consumer_secret: 
+      access_token: 
+      access_secret: 
+
+    #url: https://stream.twitter.com/1/statuses/sample.json
+    #url: https://stream.twitter.com/1/statuses/filter.json
+#    url: https://userstream.twitter.com/2/user.json
+#    url: https://stream.twitter.com/1/statuses/filter.json
+#    post_body:
+#      track: 4sq,instagr.am
+    url: http://api.twitter.com/1/statuses/home_timeline.json
+
+status_handlers:
+  - module: lib.handler.echohandler
+    class: EchoHandler
+  - module: lib.handler.stophandler
+    class: StopHandler
+    parameters:
+        count: 1000
