@@ -36,3 +36,7 @@ class TwitterReader(object):
 
     def can_retry(self):
         return False
+
+    def destruct(self):
+        # todo: close http request.
+        pass
