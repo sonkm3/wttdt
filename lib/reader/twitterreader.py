@@ -10,6 +10,8 @@ class TwitterReader(object):
         consumer = oauth2.Consumer(key = oauth['consumer_token'], secret = oauth['consumer_secret'])
         token = oauth2.Token(key = oauth['access_token'], secret = oauth['access_secret'])
 
+        self.try_count = 0
+
         self.url = url
 
         self.post_body = None
@@ -34,7 +36,10 @@ class TwitterReader(object):
 
 #        raise StopException
 
-    def can_retry(self):
+    def can_try(self):
+        if self.try_count == 0: # should be if self.try_count < max_try_count:
+            self.try_count += 1
+            return True
         return False
 
     def destruct(self):

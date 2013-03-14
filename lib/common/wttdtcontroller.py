@@ -10,13 +10,11 @@ class WttdtController:
         self.status_handlers = get_status_handlers(config)
 
     def run(self):
-        first_run = True
-        while(first_run | self.reader.can_retry()):
+        while(self.reader.can_try()):
             response = self.reader.read()
             for each_response in response:
                 result = self._call_all_status_handler(self.status_handlers, each_response)
                 yield result
-            first_run = False
 
     def _call_all_status_handler(self, status_handlers, each_response):
         result_list = []
@@ -25,4 +23,7 @@ class WttdtController:
         return result_list
 
     def _call_status_handler(self, handler, each_response):
-        return handler.handle(each_response)
+        try:
+            return handler.handle(each_response)
+        except:
+            return None # should be error object
