@@ -1,6 +1,6 @@
 reader:
-  module: lib.reader.twitterreader
-  class: TwitterReader
+  module: lib.reader.twitterstreamreader
+  class: TwitterStreamReader
 
   parameters:
     oauth:
@@ -18,8 +18,8 @@ reader:
     url: http://api.twitter.com/1/statuses/home_timeline.json
 
 status_handlers:
-  - module: lib.handler.echohandler
-    class: EchoHandler
+  - module: lib.handler.tsvechohandler
+    class: TSVEchoHandler
   - module: lib.handler.stophandler
     class: StopHandler
     parameters:
