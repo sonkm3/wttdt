@@ -9,6 +9,6 @@ class TSVEchoHandler(StatusHandlerAbstract):
             return StatusHandlerAbstract.handle(self, each_response)
         else:
             data = json.loads(each_response)
-            if u'user' in data and u'text' in data:
+            if 'user' in data and 'text' in data:
                 print (data['id_str'] + u"\t" + str(data['created_at']) + u"\t" + data['user']['screen_name'] + u"\t" + data['text']).encode('utf-8')
                 return each_response
