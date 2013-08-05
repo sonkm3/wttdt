@@ -5,8 +5,9 @@ import oauth2
 
 #from lib.handler.stophandler import StopException
 
-class TwitterReader(object):
-    def __init__ (self, url, oauth, post_body = None):
+class TwitterReaderAbstract(object):
+
+    def oauth_initialize(self, url, oauth, post_body):
         consumer = oauth2.Consumer(key = oauth['consumer_token'], secret = oauth['consumer_secret'])
         token = oauth2.Token(key = oauth['access_token'], secret = oauth['access_secret'])
 
