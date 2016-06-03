@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import urllib2
+from urllib.request import Request, urlopen
 import oauth2
 
 #from lib.handler.stophandler import StopException
@@ -24,11 +24,11 @@ class TwitterReaderAbstract(object):
 
     def read(self):
         if self.post_body:
-            request = urllib2.Request(url = self.url, data = self.request.to_postdata(), headers = self.request.to_header())
+            request = Request(url = self.url, data = self.request.to_postdata(), headers = self.request.to_header())
         else:
-            request = urllib2.Request(url = self.url, headers=self.request.to_header())
+            request = Request(url = self.url, headers=self.request.to_header())
 
-        response = urllib2.urlopen(request)
+        response = urlopen(request)
 
         for each_response in response:
             yield each_response

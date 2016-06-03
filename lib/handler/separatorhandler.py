@@ -5,5 +5,5 @@ class SeparatorHandler(StatusHandlerAbstract):
     def handle(self, each_response):
 #        for char in each_response:
 #            print '%s: %s' % (hex(ord(char)), char.rstrip())
-        print '----------------------------'
+        print ('----------------------------')
         return None

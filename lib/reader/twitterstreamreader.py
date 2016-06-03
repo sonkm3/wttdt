@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import urllib2
 import oauth2
 from lib.common.twitterreaderabstract import TwitterReaderAbstract
 
