@@ -1,0 +1,27 @@
+reader:
+  module: lib.reader.twitterstreamreader
+  class: TwitterStreamReader
+
+  parameters:
+    oauth:
+      consumer_token:
+      consumer_secret:
+      access_token:
+      access_secret:
+
+    url: https://userstream.twitter.com/1.1/user.json
+
+
+status_handlers:
+
+  - module: plugins.linenotifyhandler
+    class: LinenotifyHandler
+    parameters:
+        accountmap:
+            screen_name1:
+                keys:
+                    - line notify key1
+            screen_name2:
+                keys:
+                    - line notify key1
+                    - line notify key2
