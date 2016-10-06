@@ -9,6 +9,7 @@ class LinenotifyHandler(StatusHandlerAbstract):
     def __init__(self, accountmap=None):
 
         self.accountmap = accountmap
+        self.include_reply = False
 
     def handle(self, each_response):
         each_line = each_response.decode('utf-8').strip()
@@ -19,11 +20,21 @@ class LinenotifyHandler(StatusHandlerAbstract):
                 if screen_name in self.accountmap:
                     keys = self.accountmap[screen_name]['keys']
                     for key in keys:
-                        self.notify(data, key)
+                        self.notify(data, screen_name, key)
 
-    def notify(self, data, key):
+    def notify(self, data, screen_name, key):
         if 'retweeted_status' in data:
             return
+
+        if 'in_reply_to_screen_name' in data and (data['in_reply_to_screen_name'] == screen_name or data['in_reply_to_screen_name'] == None):
+            pass
+        else:
+            if self.include_reply:
+                pass
+            else:
+                return
+
+        self.log('status_id: ' + data['id_str'])
         self.send_notify(key, self.format_message(data))
         if 'extended_entities' in data and 'media' in data['extended_entities']:
             for count, media in enumerate(data['extended_entities']['media'], start=1):
