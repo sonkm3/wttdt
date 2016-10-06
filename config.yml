@@ -18,9 +18,15 @@ reader:
 #    url: http://api.twitter.com/1/statuses/home_timeline.json
 
 status_handlers:
-  - module: lib.handler.tsvechohandler
-    class: TSVEchoHandler
-  - module: lib.handler.stophandler
-    class: StopHandler
+#  - module: lib.handler.tsvechohandler
+#    class: TSVEchoHandler
+  - module: plugins.filestorehandler
+    class: FilestoreHandler
     parameters:
-        count: 1000
+      directory: ~/temp/
+      rotatecount: 1000
+
+  # - module: lib.handler.stophandler
+  #   class: StopHandler
+  #   parameters:
+  #       count: 1000
