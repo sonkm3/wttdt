@@ -26,12 +26,12 @@ class LinenotifyHandler(StatusHandlerAbstract):
             return
         self.send_notify(key, self.format_message(data))
         if 'extended_entities' in data and 'media' in data['extended_entities']:
-            for count, media in enumerate(data['extended_entities']['media']):
+            for count, media in enumerate(data['extended_entities']['media'], start=1):
                 self.send_notify(key, "%d/%d\n%s" % (count, len(data['extended_entities']['media']),media['media_url']), media)
         return
 
     def format_message(self, data):
-        text = data['full_text'] if data['truncated'] == True else data['text']
+        text = data['extended_tweet']['full_text'] if data['truncated'] == True else data['text']
         return "%s\n%s" % (text, data['user']['screen_name'])
 
     def send_notify(self, key, message, media=None):
