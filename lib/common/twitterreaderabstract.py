@@ -24,7 +24,7 @@ class TwitterReaderAbstract(object):
 
     def read(self):
         if self.post_body:
-            request = Request(url = self.url, data = self.request.to_postdata(), headers = self.request.to_header())
+            request = Request(url = self.url, data = self.request.to_postdata().encode('ascii') , headers = self.request.to_header())
         else:
             request = Request(url = self.url, headers=self.request.to_header())
 
