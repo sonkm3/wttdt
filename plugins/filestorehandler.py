@@ -37,6 +37,7 @@ class FilestoreHandler(StatusHandlerAbstract):
 
                 self.fileobj.write(each_line)
                 self.fileobj.write("\n")
+                self.fileobj.flush()
                 self.count += 1
         return
 
