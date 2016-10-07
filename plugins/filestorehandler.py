@@ -4,24 +4,25 @@ from lib.common.statushandlerabstract import StatusHandlerAbstract
 
 class FilestoreHandler(StatusHandlerAbstract):
 
-    def __init__(self, directory, rotatecount):
+    def __init__(self, directory, prefix='', rotatecount=1000):
         self.directory = directory
-        self.fileobj = self.get_fileobj(self.get_filepath(self.directory))
+        self.prefix = prefix
+        self.fileobj = self.get_fileobj(self.get_filepath(self.directory, self.prefix))
         self.rotatecount = rotatecount
         self.count = 0
 
     def get_fileobj(self, path):
         return open(path, mode='wt')
 
-    def get_filepath(self, directory):
+    def get_filepath(self, directory, prefix):
         dt = datetime.datetime.now()
-        filename = '%04d%02d%02d-%02d%02d%02d.txt' % (dt.year, dt.month, dt.day, dt.hour, dt.minute, dt.second)
+        filename = str(prefix) + '%04d%02d%02d-%02d%02d%02d.txt' % (dt.year, dt.month, dt.day, dt.hour, dt.minute, dt.second)
         return os.path.realpath(os.path.expanduser(os.path.normpath(directory))) + '/' + filename
 
     def rotate_fileobj(self):
         self.fileobj.flush()
         self.fileobj.close()
-        self.fileobj = self.get_fileobj(self.get_filepath(self.directory))
+        self.fileobj = self.get_fileobj(self.get_filepath(self.directory, self.prefix))
         self.count=0
 
     def handle(self, each_response):
