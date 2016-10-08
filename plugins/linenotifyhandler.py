@@ -2,6 +2,8 @@
 import json
 from lib.common.statushandlerabstract import StatusHandlerAbstract
 
+from lib.common.errorhandler import ErrorHandler
+
 import requests
 
 class LinenotifyHandler(StatusHandlerAbstract):
@@ -14,7 +16,14 @@ class LinenotifyHandler(StatusHandlerAbstract):
     def handle(self, each_response):
         each_line = each_response.decode('utf-8').strip()
         if(each_line.isprintable() and not each_line.isspace() and not each_line==''):
-            data = json.loads(each_line)
+            try:
+                data = json.loads(each_line)
+            except Exception as e:
+                self.log('error: ' + str(e.__class__.__name__))
+                self.log('line: ' + str(each_line))
+                ErrorHandler.handle()
+                return
+
             if 'user' in data and 'text' in data:
                 screen_name = data['user']['screen_name']
                 if screen_name in self.accountmap:
