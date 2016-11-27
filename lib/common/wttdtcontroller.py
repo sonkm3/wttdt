@@ -10,13 +10,16 @@ class WttdtController:
         self.status_handlers = get_status_handlers(config)
 
     def run(self):
-        first_run = True
-        while(first_run | self.reader.can_retry()):
-            response = self.reader.read()
-            for each_response in response:
+        retry_count = 0
+        while(retry_count < 1 or self.reader.can_retry()):
+            response_generator = self.reader.read()
+
+            for each_response in response_generator:
                 result = self._call_all_status_handler(self.status_handlers, each_response)
-                yield result
-            first_run = False
+                # yield result
+
+            retry_count += 1
+            # todo: log/notify when timeout(retried)
 
     def _call_all_status_handler(self, status_handlers, each_response):
         result_list = []

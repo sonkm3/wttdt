@@ -26,8 +26,8 @@ def main():
         shutdown_handler = ShutdownHandler(wttdt_controller.status_handlers + [wttdt_controller.reader])
 
         wttdt_generator = wttdt_controller.run()
-        for wttdt_status in wttdt_generator:
-            result = wttdt_status
+        # for wttdt_status in wttdt_generator:
+        #     result = wttdt_status
 
     except:
         ErrorHandler.handle()

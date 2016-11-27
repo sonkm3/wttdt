@@ -7,7 +7,7 @@ import oauth2
 
 class TwitterReaderAbstract(object):
 
-    def oauth_initialize(self, url, oauth, post_body):
+    def oauth_initialize(self, url, oauth, post_body, timeout):
         consumer = oauth2.Consumer(key = oauth['consumer_token'], secret = oauth['consumer_secret'])
         token = oauth2.Token(key = oauth['access_token'], secret = oauth['access_secret'])
 
@@ -22,13 +22,16 @@ class TwitterReaderAbstract(object):
 
         self.request.sign_request(oauth2.SignatureMethod_HMAC_SHA1(), consumer, token)
 
+        self.timeout = timeout
+
+
     def read(self):
         if self.post_body:
             request = Request(url = self.url, data = self.request.to_postdata().encode('ascii') , headers = self.request.to_header())
         else:
             request = Request(url = self.url, headers=self.request.to_header())
 
-        response = urlopen(request)
+        response = urlopen(request, timeout=self.timeout)
 
         for each_response in response:
             yield each_response
