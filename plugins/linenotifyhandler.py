@@ -13,6 +13,14 @@ class LinenotifyHandler(StatusHandlerAbstract):
         self.accountmap = accountmap
         self.include_reply = False
 
+        self.reversed_accountmap = {}
+        for account in self.accountmap.keys():
+            for key in self.accountmap[account]['keys']:
+                if key in self.reversed_accountmap:
+                    self.reversed_accountmap[key].append(account)
+                else:
+                    self.reversed_accountmap[key] = [account,]
+
     def handle(self, each_response):
         each_line = each_response.decode('utf-8').strip()
         if(each_line.isprintable() and not each_line.isspace() and not each_line==''):
@@ -35,7 +43,8 @@ class LinenotifyHandler(StatusHandlerAbstract):
         if 'retweeted_status' in data:
             return
 
-        if 'in_reply_to_screen_name' in data and (data['in_reply_to_screen_name'] == screen_name or data['in_reply_to_screen_name'] == None):
+        # if 'in_reply_to_screen_name' in data and (data['in_reply_to_screen_name'] == screen_name or data['in_reply_to_screen_name'] == None):
+        if 'in_reply_to_screen_name' in data and (data['in_reply_to_screen_name'] in self.reversed_accountmap[key] or data['in_reply_to_screen_name'] == None):
             pass
         else:
             if self.include_reply:
