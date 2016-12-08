@@ -11,6 +11,11 @@ class TwitterStreamReader(TwitterReaderAbstract):
         self.oauth_initialize(url, oauth, post_body, timeout)
         self.retry_wait = retry_wait
 
+        self.init_url = url
+        self.init_oauth = oauth
+        self.init_post_body = post_body
+        self.init_timeout = timeout
+
     def read(self):
         try:
             for result_generator in super(TwitterStreamReader, self).read():
@@ -18,6 +23,7 @@ class TwitterStreamReader(TwitterReaderAbstract):
         except socket.timeout as e:
             # todo: log
             time.sleep(self.retry_wait)
+            self.oauth_initialize(self.init_url, self.init_oauth, self.init_post_body, self.init_timeout)
 
     def can_retry(self):
         return True
