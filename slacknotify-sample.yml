@@ -1,0 +1,23 @@
+reader:
+  module: lib.reader.twitterstreamreader
+  class: TwitterStreamReader
+
+  parameters:
+    oauth:
+      consumer_token:
+      consumer_secret:
+      access_token:
+      access_secret:
+
+    url: https://userstream.twitter.com/1.1/user.json
+
+
+status_handlers:
+  - module: plugins.slacknotifyhandler
+    class: SlacknotifyHandler
+    parameters:
+        accountmap:
+            snkm3:
+                keys:
+                    - T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX
+                    # (https://hooks.slack.com/services/)T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX
