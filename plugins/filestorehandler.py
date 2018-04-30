@@ -24,7 +24,7 @@ class FilestoreHandler(StatusHandlerAbstract):
         self.fileobj.flush()
         self.fileobj.close()
         self.fileobj = self.get_fileobj(self.get_filepath(self.directory, self.prefix))
-        self.count=0
+        self.count = 0
 
     def handle(self, each_response):
         if each_response.decode('utf-8').strip() == "":
@@ -33,7 +33,7 @@ class FilestoreHandler(StatusHandlerAbstract):
             each_line = each_response.decode('utf-8').strip()
             if(each_line.isprintable() and not each_line.isspace()):
 
-                if self.count>=self.rotatecount:
+                if self.count >= self.rotatecount:
                     self.rotate_fileobj()
 
                 self.fileobj.write(each_line)
