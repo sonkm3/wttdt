@@ -3,7 +3,6 @@
 from urllib.request import Request, urlopen
 import oauth2
 
-#from lib.handler.stophandler import StopException
 
 class TwitterReaderAbstract(object):
 
@@ -24,7 +23,6 @@ class TwitterReaderAbstract(object):
 
         self.timeout = timeout
 
-
     def read(self):
         if self.post_body:
             request = Request(url = self.url, data = self.request.to_postdata().encode('ascii') , headers = self.request.to_header())
@@ -35,8 +33,6 @@ class TwitterReaderAbstract(object):
 
         for each_response in response:
             yield each_response
-
-#        raise StopException
 
     def can_retry(self):
         return False

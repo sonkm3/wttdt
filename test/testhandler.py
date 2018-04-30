@@ -13,4 +13,4 @@ class TestHandlerArg(StatusHandlerAbstract):
         self.arg2 = arg2
 
     def handle(self, each_response):
-        return arg1, arg2
+        return self.arg1, self.arg2

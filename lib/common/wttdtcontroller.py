@@ -2,6 +2,7 @@
 
 from lib.common.config import get_reader, get_status_handlers
 
+
 class WttdtController:
     def __init__(self, config):
         self._config = config

@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-import datetime, json, os
+import datetime
+import os
 from lib.common.statushandlerabstract import StatusHandlerAbstract
 
-class FilestoreHandler(StatusHandlerAbstract):
 
+class FilestoreHandler(StatusHandlerAbstract):
     def __init__(self, directory, prefix='', rotatecount=1000):
         self.directory = directory
         self.prefix = prefix

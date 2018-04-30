@@ -2,6 +2,7 @@
 import unittest
 from lib.common.config import Config, get_status_handlers, get_reader, _klass_loader
 
+
 class TestConfigFunctions(unittest.TestCase):
     def setUp(self):
         self.config = Config('test/config_test.yml')

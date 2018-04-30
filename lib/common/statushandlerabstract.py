@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import sys
 
+
 class StatusHandlerAbstract(object):
     def handle(self, each_response):
         return None

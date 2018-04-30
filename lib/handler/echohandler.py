@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-import json
 from lib.common.statushandlerabstract import StatusHandlerAbstract
+
 
 class EchoHandler(StatusHandlerAbstract):
 

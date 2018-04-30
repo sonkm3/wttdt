@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
-import sys, traceback
+import sys
+import traceback
+
 
 class ErrorHandler(object):
     @staticmethod

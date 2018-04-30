@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 import json
-from lib.common.statushandlerabstract import StatusHandlerAbstract
-
-from lib.common.errorhandler import ErrorHandler
 
 import requests
+
+
+from lib.common.errorhandler import ErrorHandler
+from lib.common.statushandlerabstract import StatusHandlerAbstract
+
 
 class LinenotifyHandler(StatusHandlerAbstract):
 
