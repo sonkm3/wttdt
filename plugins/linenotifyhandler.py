@@ -23,7 +23,7 @@ class LinenotifyHandler(StatusHandlerAbstract):
 
     def handle(self, each_response):
         each_line = each_response.decode('utf-8').strip()
-        if(each_line.isprintable() and not each_line.isspace() and not each_line==''):
+        if(each_line.isprintable() and not each_line.isspace() and not each_line == ''):
             try:
                 data = json.loads(each_line)
             except Exception as e:
@@ -43,7 +43,6 @@ class LinenotifyHandler(StatusHandlerAbstract):
         if 'retweeted_status' in data:
             return
 
-        # if 'in_reply_to_screen_name' in data and (data['in_reply_to_screen_name'] == screen_name or data['in_reply_to_screen_name'] == None):
         if 'in_reply_to_screen_name' in data and (data['in_reply_to_screen_name'] in self.reversed_accountmap[key] or data['in_reply_to_screen_name'] == None):
             pass
         else:
@@ -56,11 +55,11 @@ class LinenotifyHandler(StatusHandlerAbstract):
         self.send_notify(key, self.format_message(data))
         if 'extended_entities' in data and 'media' in data['extended_entities']:
             for count, media in enumerate(data['extended_entities']['media'], start=1):
-                self.send_notify(key, "%d/%d\n%s" % (count, len(data['extended_entities']['media']),media['media_url']), media)
+                self.send_notify(key, "%d/%d\n%s" % (count, len(data['extended_entities']['media']), media['media_url']), media)
         return
 
     def format_message(self, data):
-        text = data['extended_tweet']['full_text'] if data['truncated'] == True else data['text']
+        text = data['extended_tweet']['full_text'] if data['truncated'] is True else data['text']
         return "%s\n%s" % (text, data['user']['screen_name'])
 
     def send_notify(self, key, message, media=None):
@@ -72,12 +71,12 @@ class LinenotifyHandler(StatusHandlerAbstract):
             payload['imageThumbnail'] = media['media_url']
             payload['imageFullsize'] = media['media_url'] + ':orig'
 
-        self.log('payload: '+ str(payload))
-        self.log('key: '+ str(key))
+        self.log('payload: ' + str(payload))
+        self.log('key: ' + str(key))
 
         r = requests.post(url, data=payload, headers=headers)
 
-        self.log('status: '+ str(r.status_code))
+        self.log('status: ' + str(r.status_code))
 
         return r.status_code
 
